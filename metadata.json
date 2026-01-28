@@ -1,0 +1,8 @@
+{
+  "name": "TicTacWin Tournament",
+  "description": "A professional Tic Tac Toe tournament platform with real-time gameplay, wallet management, and secure authentication.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
