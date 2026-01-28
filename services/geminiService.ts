@@ -3,20 +3,19 @@ import { GoogleGenAI } from "@google/genai";
 
 export const getGameCommentary = async (board: (string | null)[], lastMoveIndex: number, player: string) => {
   try {
-    // Standard initialization using process.env.API_KEY
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
+    const apiKey = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : "";
+    if (!apiKey) return "The match is heating up! Strategic moves everywhere.";
+
+    const ai = new GoogleGenAI({ apiKey });
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `Context: Tic Tac Toe game. Board state: ${JSON.stringify(board)}. 
-                 Last move by ${player} at index ${lastMoveIndex}.
-                 Task: Provide a short, professional, and exciting 1-sentence commentary. 
-                 Be brief (max 15 words).`,
+      contents: `Tic Tac Toe game. Board: ${JSON.stringify(board)}. Move by ${player} at index ${lastMoveIndex}. One short exciting sentence.`,
     });
     
-    return response.text || "Match point! Every move counts now.";
+    return response.text || "Professional play detected. The crowd is silent.";
   } catch (error) {
-    console.error("Gemini Commentary Error:", error);
-    return "The atmosphere is electric in the arena!";
+    console.error("Gemini Error:", error);
+    return "High tension in the elite arena!";
   }
 };
